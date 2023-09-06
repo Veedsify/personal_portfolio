@@ -1,0 +1,141 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model category {
+  id          Int    @id @default(autoincrement())
+  category    String
+  name        String
+  category_id String
+  slug        String
+}
+
+model homepage {
+  id                      Int      @id @default(autoincrement())
+  logo                    String?
+  logo_link               String?
+  website_name            String?
+  website_description     String?
+  greeting_in_black       String?
+  greeting_in_green       String?
+  name_in_green           String?
+  name_in_white           String?
+  occupation_first        String?
+  occupation_italic       String?
+  hero_image              String?
+  experience_years        String?
+  project_completed       String?
+  description             String?
+  links                   Json?
+  call_to_action_text     String?
+  call_to_action_link     String?
+  services_title          String?
+  skills_title            String?
+  portfolio_title         String?
+  resume_title            String?
+  testimonial_title       String?
+  pricing_title           String?
+  pricing_tiers           Json?
+  blog_title              String?
+  blog_subtitle           String?
+  blog_cta                Json?
+  footer_address          String?
+  footer_email            String?
+  footer_phone            String?
+  footer_freelance_status String?
+  footer_contact_cta      String?
+  date                    DateTime @default(now())
+  target_id               String?  @default("home_id_123_id")
+}
+
+model portfolio {
+  id           Int      @id @default(autoincrement())
+  name         String
+  category     String
+  description  String
+  slug         String
+  date         DateTime @default(now())
+  contents     String
+  main_image   String
+  portfolio_id String
+  extra_images String?  @db.LongText
+}
+
+model portfolio_category {
+  id          Int    @id @default(autoincrement())
+  category    String
+  name        String
+  category_id String
+  slug        String
+}
+
+model resume {
+  id          Int    @id @default(autoincrement())
+  category    String
+  name        String
+  tag         String
+  duration    String @db.LongText
+  description String
+  resume_id   String
+  slug        String
+}
+
+model services {
+  id                  Int      @id @default(autoincrement())
+  category            String
+  service_name        String
+  service_description String   @db.LongText
+  services_image      String
+  slug                String
+  date                DateTime @default(now())
+  service_id          Int      @unique
+  user_id             String   @default("")
+}
+
+model services_category {
+  id          Int    @id @default(autoincrement())
+  category    String
+  name        String
+  category_id Int    @unique
+  slug        String
+}
+
+model sessions {
+  session_id String  @id @db.VarChar(128)
+  expires    Int     @db.UnsignedInt
+  data       String? @db.MediumText
+}
+
+model skill_category {
+  id          Int    @id @default(autoincrement())
+  category    String
+  name        String
+  category_id String @unique
+  slug        String
+}
+
+model skills {
+  id                Int      @id @default(autoincrement())
+  skill_name        String
+  skill_description String   @db.MediumText
+  skill_level       Int
+  date              DateTime @default(now())
+  skill_category    String
+  skills_id         String   @unique
+  slug              String
+  user_id           String   @default("")
+}
+
+model user {
+  id       Int      @id @default(autoincrement())
+  fullname String?
+  email    String
+  password String   @db.LongText
+  user_id  String
+  date     DateTime @default(now())
+}
